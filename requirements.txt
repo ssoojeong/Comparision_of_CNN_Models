@@ -1,0 +1,6 @@
+torchvision
+IPython
+transformers
+scipy
+opencv-python
+torchmetrics

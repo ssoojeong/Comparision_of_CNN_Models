@@ -1,0 +1,104 @@
+############학습 시작############
+Epoch 0/24
+----------
+train Loss: 3.6777 Acc: 0.0788
+val Loss: 3.3153 Acc: 0.1623
+Epoch 1/24
+----------
+train Loss: 3.3439 Acc: 0.1365
+val Loss: 3.0325 Acc: 0.1509
+Epoch 2/24
+----------
+train Loss: 3.1994 Acc: 0.1565
+val Loss: 2.8732 Acc: 0.1849
+Epoch 3/24
+----------
+train Loss: 3.1083 Acc: 0.1717
+val Loss: 2.7915 Acc: 0.1962
+Epoch 4/24
+----------
+train Loss: 3.0315 Acc: 0.1840
+val Loss: 2.7698 Acc: 0.1698
+Epoch 5/24
+----------
+train Loss: 2.9907 Acc: 0.1970
+val Loss: 2.7249 Acc: 0.1962
+Epoch 6/24
+----------
+train Loss: 2.9562 Acc: 0.2078
+val Loss: 2.5840 Acc: 0.2189
+Epoch 7/24
+----------
+train Loss: 2.8961 Acc: 0.2282
+val Loss: 2.6083 Acc: 0.2189
+Epoch 8/24
+----------
+train Loss: 2.9118 Acc: 0.2200
+val Loss: 2.5804 Acc: 0.2038
+Epoch 9/24
+----------
+train Loss: 2.9068 Acc: 0.2327
+val Loss: 2.6571 Acc: 0.2075
+Epoch 10/24
+----------
+train Loss: 2.8784 Acc: 0.2305
+val Loss: 2.5907 Acc: 0.2189
+Epoch 11/24
+----------
+train Loss: 2.8832 Acc: 0.2231
+val Loss: 2.5784 Acc: 0.1962
+Epoch 12/24
+----------
+train Loss: 2.8775 Acc: 0.2274
+val Loss: 2.6045 Acc: 0.2226
+Epoch 13/24
+----------
+train Loss: 2.8946 Acc: 0.2243
+val Loss: 2.6195 Acc: 0.2038
+Epoch 14/24
+----------
+train Loss: 2.8825 Acc: 0.2343
+val Loss: 2.6223 Acc: 0.2075
+Epoch 15/24
+----------
+train Loss: 2.8832 Acc: 0.2301
+val Loss: 2.5956 Acc: 0.1925
+Epoch 16/24
+----------
+train Loss: 2.8776 Acc: 0.2308
+val Loss: 2.7202 Acc: 0.2189
+Epoch 17/24
+----------
+train Loss: 2.8808 Acc: 0.2328
+val Loss: 2.5582 Acc: 0.2377
+Epoch 18/24
+----------
+train Loss: 2.8724 Acc: 0.2373
+val Loss: 2.6269 Acc: 0.1887
+Epoch 19/24
+----------
+train Loss: 2.8783 Acc: 0.2354
+val Loss: 2.6025 Acc: 0.2075
+Epoch 20/24
+----------
+train Loss: 2.8755 Acc: 0.2322
+val Loss: 2.6503 Acc: 0.2000
+Epoch 21/24
+----------
+train Loss: 2.8801 Acc: 0.2349
+val Loss: 2.5413 Acc: 0.2453
+Epoch 22/24
+----------
+train Loss: 2.8626 Acc: 0.2374
+val Loss: 2.5312 Acc: 0.2264
+Epoch 23/24
+----------
+train Loss: 2.8653 Acc: 0.2378
+val Loss: 2.6012 Acc: 0.1887
+Epoch 24/24
+----------
+train Loss: 2.8584 Acc: 0.2387
+val Loss: 2.6240 Acc: 0.2038
+############학습 끝############
+Training complete in 20m 46s
+Best val Acc: 0.245283
