@@ -1,4 +1,4 @@
-# Comparision_of_CNN_Models
+# Comparision of CNN Models
 
 ## &#x1F4E2; Project Overview: 2310~2311
 
