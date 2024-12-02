@@ -45,7 +45,6 @@ pip install -r requirements.txt
 
 #### 2. 모델 훈련 및 인퍼런스
 ```bash
-# 1. GLIDE
 python train.py \
     --model {모델명} \ #e.g., alexnet, vgg16 ... \
     --epochs 10 \ #defualt: 25
