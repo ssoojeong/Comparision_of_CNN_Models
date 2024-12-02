@@ -4,3 +4,5 @@ transformers
 scipy
 opencv-python
 torchmetrics
+matplotlib
+tqdm

@@ -130,6 +130,7 @@ dist/
 *.zip
 *.csv
 
-cards/
+data/
 
+*.ipynb
 

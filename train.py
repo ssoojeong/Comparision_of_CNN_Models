@@ -16,11 +16,12 @@ import time
 import os
 import copy
 import logging
-
+from tqdm import tqdm
+from datetime import datetime
 
 from argparse import ArgumentParser, ArgumentDefaultsHelpFormatter
 parser = ArgumentParser(formatter_class=ArgumentDefaultsHelpFormatter)
-parser.add_argument('--data', type=str, default='./data/cards')
+parser.add_argument('--data', type=str, default=None)
 parser.add_argument('--save_log', type=str, default='./results/log')
 parser.add_argument('--save_model', type=str, default='./results/model')
 parser.add_argument('--gpus', default='0', type=int, help='gpu_number')
@@ -48,6 +49,9 @@ logger.setLevel(logging.INFO)
 stream_handler = logging.StreamHandler()
 logger.addHandler(stream_handler)
 mkdir(args.save_log)
+current_time = datetime.now().strftime("%Y%m%d-%H%M%S")
+args.name = current_time
+
 if args.pretrained:
     file_handler = logging.FileHandler(os.path.join(args.save_log, f'{args.name}_{args.model}_{args.epochs}epoch_pre_train.log'))
 else:
@@ -120,9 +124,9 @@ def train_model(model, criterion, optimizer, scheduler, num_epochs=25):
     best_acc = 0.0
     
     logger.info("############학습 시작############")
+    logger.info('-' * 10)
     for epoch in range(num_epochs):
         logger.info(f'Epoch {epoch}/{num_epochs - 1}')
-        logger.info('-' * 10)
 
         # 각 에폭(epoch)은 학습 단계와 검증 단계를 갖습니다.
         for phase in ['train', 'val']:
@@ -134,29 +138,40 @@ def train_model(model, criterion, optimizer, scheduler, num_epochs=25):
             running_loss = 0.0
             running_corrects = 0
 
-            # 데이터를 반복
-            for inputs, labels in dataloaders[phase]:
-                inputs = inputs.to(device)
-                labels = labels.to(device)
+            # 데이터 반복 및 진행률 표시
+            phase_dataloader = dataloaders[phase]
+            phase_size = len(phase_dataloader)
+            
+            with tqdm(total=phase_size, desc=f"{phase.capitalize()} Progress", leave=False) as pbar:
+                # 데이터를 반복
+                for inputs, labels in dataloaders[phase]:
+                    inputs = inputs.to(device)
+                    labels = labels.to(device)
 
-                # 매개변수 경사도를 0으로 설정
-                optimizer.zero_grad()
+                    # 매개변수 경사도를 0으로 설정
+                    optimizer.zero_grad()
 
-                # 순전파
-                # 학습 시에만 연산 기록을 추적
-                with torch.set_grad_enabled(phase == 'train'):
-                    outputs = model(inputs)
-                    _, preds = torch.max(outputs, 1)
-                    loss = criterion(outputs, labels)
+                    # 순전파
+                    # 학습 시에만 연산 기록을 추적
+                    with torch.set_grad_enabled(phase == 'train'):
+                        outputs = model(inputs)
+                        _, preds = torch.max(outputs, 1)
+                        loss = criterion(outputs, labels)
 
-                    # 학습 단계인 경우 역전파 + 최적화
-                    if phase == 'train':
-                        loss.backward()
-                        optimizer.step()
+                        # 학습 단계인 경우 역전파 + 최적화
+                        if phase == 'train':
+                            loss.backward()
+                            optimizer.step()
 
-                # 통계
-                running_loss += loss.item() * inputs.size(0)
-                running_corrects += torch.sum(preds == labels.data)
+                    # 통계
+                    running_loss += loss.item() * inputs.size(0)
+                    running_corrects += torch.sum(preds == labels.data)
+
+                    # 진행률 업데이트
+                    pbar.update(1)
+                    pbar.set_postfix(Loss=loss.item())
+
+                    
             if phase == 'train':
                 scheduler.step()
 
@@ -169,7 +184,8 @@ def train_model(model, criterion, optimizer, scheduler, num_epochs=25):
             if phase == 'val' and epoch_acc > best_acc:
                 best_acc = epoch_acc
                 best_model_wts = copy.deepcopy(model.state_dict())
-
+        
+        logger.info('-' * 10)
         print()
 
     time_elapsed = time.time() - since
@@ -194,8 +210,15 @@ if __name__ == '__main__':
 
     #데이터 로드
     data_dir = args.data
-    image_datasets = {x: datasets.ImageFolder(os.path.join(data_dir, x),
-                                            data_transforms[x])
+    if data_dir is None:
+        # cifar10 데이터셋 로드
+        train_dataset = datasets.CIFAR10(root='./data', train=True, download=True, transform=data_transforms['train'])
+        val_dataset = datasets.CIFAR10(root='./data', train=False, download=True, transform=data_transforms['val'])
+
+        image_datasets = {'train': train_dataset, 'val': val_dataset}
+    else: 
+        image_datasets = {x: datasets.ImageFolder(os.path.join(data_dir, x),
+                                                data_transforms[x])
                     for x in ['train', 'val']}
     dataloaders = {x: torch.utils.data.DataLoader(image_datasets[x], batch_size=4,
                                                 shuffle=True, num_workers=4)
