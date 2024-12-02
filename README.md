@@ -38,6 +38,8 @@
 conda create -n cnns python=3.9
 conda activate cnns
 
+cd ./Comparision_of_CNN_Models
+
 pip install -r requirements.txt
 ```
 
@@ -46,8 +48,8 @@ pip install -r requirements.txt
 # 1. GLIDE
 python train.py \
     --model {모델명} \ #e.g., alexnet, vgg16 ... \
-    --epochs 10 #defualt: 25
-    --gpus 0 \
+    --epochs 10 \ #defualt: 25
+    --gpus 0
 ```
 > **모델명**: resnet18, resnet50, vgg16, alexnet, inception_v3, googlenet, mobilenet_v2, densenet121
 
@@ -58,15 +60,16 @@ log 저장 경로: ```./results/log/```
 #e.g., AlexNet, 25epoch
 
 ############학습 시작############
-Epoch 0/24
 ----------
+Epoch 0/24
 train Loss: 9.1037 Acc: 0.1560
 val Loss: 11.9101 Acc: 0.1925
-Epoch 1/24
 ----------
+Epoch 1/24
 
 ...
 
+----------
 ############학습 끝############
 Training complete in 3m 28s
 Best val Acc: 0.449057
